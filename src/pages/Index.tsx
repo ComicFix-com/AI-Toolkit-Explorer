@@ -16,7 +16,11 @@ const keywords = [
   "AI Research", "Generative AI", "Web GPT Technologies", "AI Frameworks", "GPT-4 in Practice",
   "WebGPT-4 User Experience", "AI-Based Solutions", "AI Ethics", "WebGPT-4 Functionality",
   "AI Development", "GPT-4 Evolution", "WebGPT-4 for Businesses", "AI Use Cases", "AI Trends",
-  "GPT-4 Performance", "WebGPT-4 Applications"
+  "GPT-4 Performance", "WebGPT-4 Applications",
+  // New keywords
+  "Python", "Education", "Data Science", "R", "Scikit-learn",
+  "Machine Learning Algorithms", "ML", "Machine Learning Python",
+  "Scikit-learn Python"
 ];
 
 const fetchTools = async () => {
@@ -32,7 +36,8 @@ const fetchTools = async () => {
     name: item.name,
     description: item.description || 'No description available',
     url: item.html_url,
-    category: 'AI Tools'
+    category: 'AI Tools',
+    stars: item.stargazers_count
   }));
 };
 
