@@ -7,27 +7,13 @@ import DonationButton from '../components/DonationButton';
 import ErrorBoundary from '../components/ErrorBoundary';
 
 const keywords = [
-  "AI", "GPT-4", "WebGPT-4", "AI Assistant", "GPT-4 Model", "WebGPT-4 Chatbot",
-  "Artificial Intelligence", "Generative Pre-trained Transformer 4", "Web AI",
-  "ChatGPT", "AI Language Model", "OpenAI GPT-4", "Conversational AI", "WebGPT AI",
-  "Machine Learning", "Deep Learning", "Natural Language Processing", "AI Algorithms",
-  "GPT Technology", "Web-Based AI", "AI-Powered Assistant", "AI Tools", "GPT-4 Application",
-  "WebGPT-4 Integration", "AI Chatbot", "Language AI", "Smart AI", "WebGPT for Developers",
-  "AI Innovations", "Chatbot AI", "Intelligent Systems", "AI-Driven Solutions",
-  "Advanced AI Models", "AI and Machine Learning", "GPT-4 Features", "WebGPT-4 Capabilities",
-  "AI Research", "Generative AI", "Web GPT Technologies", "AI Frameworks", "GPT-4 in Practice",
-  "WebGPT-4 User Experience", "AI-Based Solutions", "AI Ethics", "WebGPT-4 Functionality",
-  "AI Development", "GPT-4 Evolution", "WebGPT-4 for Businesses", "AI Use Cases", "AI Trends",
-  "GPT-4 Performance", "WebGPT-4 Applications",
-  // New keywords
-  "Python", "Education", "Data Science", "R", "Scikit-learn",
-  "Machine Learning Algorithms", "ML", "Machine Learning Python",
-  "Scikit-learn Python"
+  "AI", "GPT-4", "Machine Learning", "Deep Learning", "Natural Language Processing",
+  "ChatGPT", "Artificial Intelligence", "Data Science", "Python", "TensorFlow"
 ];
 
 const fetchTools = async () => {
   try {
-    const query = keywords.map(keyword => `${keyword} in:name,description,readme`).join(' OR ');
+    const query = keywords.map(keyword => `${keyword} in:name,description`).join(' OR ');
     const encodedQuery = encodeURIComponent(query);
     const response = await fetch(`https://api.github.com/search/repositories?q=${encodedQuery}&sort=stars&order=desc&per_page=100`);
     if (!response.ok) {
