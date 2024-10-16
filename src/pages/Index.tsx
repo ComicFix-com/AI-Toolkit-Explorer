@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import ToolCard from '../components/ToolCard';
 import ToolCardSkeleton from '../components/ToolCardSkeleton';
@@ -49,7 +49,7 @@ const fetchTools = async () => {
 };
 
 const Index = () => {
-  const { data: tools, isLoading, error } = useQuery({
+  const { data: tools, isLoading, error, refetch } = useQuery({
     queryKey: ['ai-tools'],
     queryFn: fetchTools,
     retry: 3,
@@ -62,7 +62,34 @@ const Index = () => {
     tool.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  if (error) return <div>An error has occurred: {error.message}</div>;
+  useEffect(() => {
+    const handleOnline = () => {
+      if (error) {
+        refetch();
+      }
+    };
+
+    window.addEventListener('online', handleOnline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+    };
+  }, [error, refetch]);
+
+  if (error) {
+    return (
+      <div className="container mx-auto px-4 py-8 text-center">
+        <h1 className="text-3xl font-bold mb-4">Error</h1>
+        <p className="mb-4">An error occurred while fetching data. Please check your internet connection and try again.</p>
+        <button
+          onClick={() => refetch()}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
 
   return (
     <ErrorBoundary>
