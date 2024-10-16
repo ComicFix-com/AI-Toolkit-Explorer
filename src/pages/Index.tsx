@@ -1,38 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import ToolCard from '../components/ToolCard';
 import ToolCardSkeleton from '../components/ToolCardSkeleton';
 import SearchBar from '../components/SearchBar';
 
-const toolsData = [
-  {
-    id: '1',
-    name: 'gpt4-pdf-chatbot-langchain',
-    description: 'GPT4 & LangChain Chatbot for large PDF docs.',
-    url: 'https://github.com/mayooear/gpt4-pdf-chatbot-langchain',
-    category: 'Open-source projects'
-  },
-  {
-    id: '2',
-    name: 'GPT-4 Chat UI',
-    description: 'Replit GPT-4 frontend template for Next.js.',
-    url: 'https://replit.com/@zahid/GPT-4-Chat-UI',
-    category: 'Open-source projects'
-  },
-  {
-    id: '3',
-    name: 'GPT-Prompter',
-    description: "Browser extension to get a fast prompt for OpenAI's GPT-3, GPT-4 & ChatGPT API.",
-    url: 'https://github.com/giosilvi/GPT-Prompter',
-    category: 'Open-source projects'
-  },
-  // Add more tools here...
-];
-
 const fetchTools = async () => {
-  // Simulating an API call with a delay
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  return toolsData;
+  const response = await fetch('https://api.github.com/search/repositories?q=ai+in:name,description,readme&sort=stars&order=desc');
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  const data = await response.json();
+  return data.items.map(item => ({
+    id: item.id.toString(),
+    name: item.name,
+    description: item.description || 'No description available',
+    url: item.html_url,
+    category: 'AI Tools'
+  }));
 };
 
 const Index = () => {
@@ -41,7 +25,7 @@ const Index = () => {
     queryFn: fetchTools,
   });
 
-  const [searchTerm, setSearchTerm] = React.useState('');
+  const [searchTerm, setSearchTerm] = useState('');
 
   const filteredTools = tools?.filter(tool =>
     tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
