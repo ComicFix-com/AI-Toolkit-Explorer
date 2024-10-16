@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import ToolCard from '../components/ToolCard';
 import ToolCardSkeleton from '../components/ToolCardSkeleton';
 import SearchBar from '../components/SearchBar';
+import DonationButton from '../components/DonationButton';
 
 const keywords = [
   "AI", "GPT-4", "WebGPT-4", "AI Assistant", "GPT-4 Model", "WebGPT-4 Chatbot",
@@ -58,13 +59,16 @@ const Index = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">AI Toolkit Explorer</h1>
+      <h1 className="text-3xl font-bold mb-8 text-center">AI Toolkit Explorer</h1>
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {isLoading
           ? Array(6).fill(0).map((_, index) => <ToolCardSkeleton key={index} />)
           : filteredTools?.map(tool => <ToolCard key={tool.id} tool={tool} />)
         }
+      </div>
+      <div className="mt-8 text-center">
+        <DonationButton />
       </div>
     </div>
   );
