@@ -7,8 +7,7 @@ import DonationButton from '../components/DonationButton';
 import ErrorBoundary from '../components/ErrorBoundary';
 
 const keywords = [
-  "AI", "GPT-4", "Machine Learning", "Deep Learning", "Natural Language Processing",
-  "ChatGPT", "Artificial Intelligence", "Data Science", "Python", "TensorFlow"
+  "AI", "GPT-4", "Machine Learning", "Deep Learning", "Natural Language Processing"
 ];
 
 const fetchTools = async () => {
