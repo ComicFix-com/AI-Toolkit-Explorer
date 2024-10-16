@@ -4,13 +4,35 @@ import ToolCard from '../components/ToolCard';
 import ToolCardSkeleton from '../components/ToolCardSkeleton';
 import SearchBar from '../components/SearchBar';
 
+const toolsData = [
+  {
+    id: '1',
+    name: 'gpt4-pdf-chatbot-langchain',
+    description: 'GPT4 & LangChain Chatbot for large PDF docs.',
+    url: 'https://github.com/mayooear/gpt4-pdf-chatbot-langchain',
+    category: 'Open-source projects'
+  },
+  {
+    id: '2',
+    name: 'GPT-4 Chat UI',
+    description: 'Replit GPT-4 frontend template for Next.js.',
+    url: 'https://replit.com/@zahid/GPT-4-Chat-UI',
+    category: 'Open-source projects'
+  },
+  {
+    id: '3',
+    name: 'GPT-Prompter',
+    description: "Browser extension to get a fast prompt for OpenAI's GPT-3, GPT-4 & ChatGPT API.",
+    url: 'https://github.com/giosilvi/GPT-Prompter',
+    category: 'Open-source projects'
+  },
+  // Add more tools here...
+];
+
 const fetchTools = async () => {
-  // This is a mock API call. Replace with actual API endpoint when available.
-  const response = await fetch('https://api.example.com/ai-tools');
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-  return response.json();
+  // Simulating an API call with a delay
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  return toolsData;
 };
 
 const Index = () => {

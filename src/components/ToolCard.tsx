@@ -7,7 +7,6 @@ interface Tool {
   id: string;
   name: string;
   description: string;
-  ratings: number;
   url: string;
   category: string;
 }
@@ -23,10 +22,6 @@ const ToolCard: React.FC<{ tool: Tool }> = ({ tool }) => {
         <p>{tool.description}</p>
       </CardContent>
       <CardFooter className="flex justify-between items-center">
-        <div className="flex items-center">
-          <Star className="w-5 h-5 text-yellow-400 mr-1" />
-          <span>{tool.ratings} ratings</span>
-        </div>
         <Button
           variant="outline"
           onClick={() => window.open(tool.url, '_blank')}
