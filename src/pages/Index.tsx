@@ -1,11 +1,42 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import ToolCard from '../components/ToolCard';
+import ToolCardSkeleton from '../components/ToolCardSkeleton';
+import SearchBar from '../components/SearchBar';
+
+const fetchTools = async () => {
+  // This is a mock API call. Replace with actual API endpoint when available.
+  const response = await fetch('https://api.example.com/ai-tools');
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return response.json();
+};
 
 const Index = () => {
+  const { data: tools, isLoading, error } = useQuery({
+    queryKey: ['ai-tools'],
+    queryFn: fetchTools,
+  });
+
+  const [searchTerm, setSearchTerm] = React.useState('');
+
+  const filteredTools = tools?.filter(tool =>
+    tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    tool.category.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  if (error) return <div>An error has occurred: {error.message}</div>;
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-8">AI Toolkit Explorer</h1>
+      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {isLoading
+          ? Array(6).fill(0).map((_, index) => <ToolCardSkeleton key={index} />)
+          : filteredTools?.map(tool => <ToolCard key={tool.id} tool={tool} />)
+        }
       </div>
     </div>
   );
